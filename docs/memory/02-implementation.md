@@ -26,6 +26,7 @@
 
 | 模块 | 源码位置 | 职责 |
 |------|----------|------|
+| **AutoDream** | `src/services/autoDream/` | 后台记忆整合（"做梦"），详见 [03-autodream.md](./03-autodream.md) |
 | **类型定义** | `src/memdir/memoryTypes.ts` | 四种记忆类型的分类法和提示词模板 |
 | **新鲜度** | `src/memdir/memoryAge.ts` | 计算记忆年龄、生成陈旧警告 |
 | **文件检测** | `src/utils/memoryFileDetection.ts` | 判断路径是否属于记忆系统 |
@@ -453,5 +454,19 @@ maxTurns = 5  // 分叉代理最多 5 个 turn
 │    → runForkedAgent() [共享缓存, 限制工具, 5 turns]   │
 │    → 写入新记忆文件 + 更新 MEMORY.md                  │
 │    → 通知用户                                        │
+└────────────────────────┬────────────────────────────┘
+                         ↓
+┌─────────────────────────────────────────────────────┐
+│           后台记忆整合（AutoDream）                    │
+│                                                      │
+│  executeAutoDream() [每 24h + 5个会话触发]            │
+│    → 五重门控检查（开关/时间/节流/会话/锁）            │
+│    → buildConsolidationPrompt()                      │
+│    → runForkedAgent() [只读 Bash, 仅记忆目录写入]     │
+│    → 四阶段：定向 → 收集 → 整合 → 修剪               │
+│    → 合并重复 / 修正过时 / 压缩索引                   │
+│    → 通知用户："Improved N memories"                  │
+│                                                      │
+│  详见 03-autodream.md                                │
 └─────────────────────────────────────────────────────┘
 ```

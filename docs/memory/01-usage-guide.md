@@ -237,7 +237,22 @@ Claude：[本次对话中不使用任何记忆内容]
   记忆变旧？验证后再使用
       ↓
   过时？更新或删除
+      ↓
+ （24h + 5个会话后）
+      ↓
+  AutoDream 后台整合记忆
 ```
+
+### AutoDream —— "做梦"整理记忆
+
+Claude Code 有一个隐藏的 **AutoDream** 功能，类比人类睡眠时大脑整理记忆的过程。当满足以下条件时，Claude 会在后台静默启动一个"做梦"子智能体：
+
+- 距上次整合 **>= 24 小时**
+- 期间积累了 **>= 5 个会话**
+
+做梦过程分四阶段：定向 → 收集 → 整合 → 修剪。底部状态栏会显示 **"dreaming"**，你可以按 `Shift+Down` 查看进度，按 `x` 终止。
+
+详细技术分析见 [AutoDream 记忆整合](./03-autodream.md)。
 
 ### 新鲜度管理
 
@@ -257,4 +272,6 @@ Claude：[本次对话中不使用任何记忆内容]
 | 审查和整理 | `/remember` 命令 |
 | 忽略记忆 | "忽略记忆" / "不要用记忆" |
 | 禁用自动记忆 | `CLAUDE_CODE_DISABLE_AUTO_MEMORY=1` |
+| 禁用 AutoDream | `settings.json` 中 `"autoDreamEnabled": false` |
+| 手动整合记忆 | `/dream` 命令 |
 | 查看记忆目录 | `~/.claude/projects/{hash}/memory/` |
