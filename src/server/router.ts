@@ -12,6 +12,7 @@ import { handleStatusApi } from './api/status.js'
 import { handleConversationsApi } from './api/conversations.js'
 import { handleTeamsApi } from './api/teams.js'
 import { handleFilesystemRoute } from './api/filesystem.js'
+import { handleProvidersApi } from './api/providers.js'
 
 export async function handleApiRequest(req: Request, url: URL): Promise<Response> {
   const path = url.pathname
@@ -58,6 +59,9 @@ export async function handleApiRequest(req: Request, url: URL): Promise<Response
 
     case 'teams':
       return handleTeamsApi(req, url, segments)
+
+    case 'providers':
+      return handleProvidersApi(req, url, segments)
 
     case 'filesystem':
       return handleFilesystemRoute(url.pathname, url)

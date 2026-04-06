@@ -9,11 +9,12 @@
  */
 
 import { SettingsService } from '../services/settingsService.js'
+import { ProviderService } from '../services/providerService.js'
 import { ApiError, errorResponse } from '../middleware/errorHandler.js'
 
-// ─── Static data ──────────────────────────────────────────────────────────────
+// ─── Fallback models (used when no provider is configured) ────────────────────
 
-const AVAILABLE_MODELS = [
+const DEFAULT_MODELS = [
   {
     id: 'claude-opus-4-6-20250610',
     name: 'Opus 4.6',
@@ -46,6 +47,7 @@ const DEFAULT_MODEL = 'claude-sonnet-4-6-20250514'
 const DEFAULT_EFFORT = 'medium'
 
 const settingsService = new SettingsService()
+const providerService = new ProviderService()
 
 // ─── Router ───────────────────────────────────────────────────────────────────
 
@@ -66,9 +68,9 @@ export async function handleModelsApi(
     // ── /api/models/* ─────────────────────────────────────────────────
     switch (sub) {
       case undefined:
-        // GET /api/models
+        // GET /api/models — 优先从激活的 Provider 读取模型列表
         if (req.method !== 'GET') throw methodNotAllowed(req.method)
-        return Response.json({ models: AVAILABLE_MODELS })
+        return await handleModelsList()
 
       case 'current':
         return await handleCurrentModel(req)
@@ -83,16 +85,31 @@ export async function handleModelsApi(
 
 // ─── Handlers ─────────────────────────────────────────────────────────────────
 
+async function handleModelsList(): Promise<Response> {
+  const activeProvider = await providerService.getActiveProvider()
+  if (activeProvider) {
+    return Response.json({
+      models: activeProvider.models,
+      provider: { id: activeProvider.id, name: activeProvider.name },
+    })
+  }
+  return Response.json({ models: DEFAULT_MODELS, provider: null })
+}
+
 async function handleCurrentModel(req: Request): Promise<Response> {
   if (req.method === 'GET') {
     const settings = await settingsService.getUserSettings()
     const baseModelId = (settings.model as string) || DEFAULT_MODEL
     const contextTier = (settings.modelContext as string) || undefined
 
+    // Build the full model list: prefer active provider's models, fall back to defaults
+    const activeProvider = await providerService.getActiveProvider()
+    const availableModels = activeProvider ? activeProvider.models : DEFAULT_MODELS
+
     // Reconstruct composite ID for lookup (e.g. 'claude-opus-4-6-20250610:1m')
     const lookupId = contextTier ? `${baseModelId}:${contextTier}` : baseModelId
-    const model = AVAILABLE_MODELS.find((m) => m.id === lookupId)
-      || AVAILABLE_MODELS.find((m) => m.id === baseModelId)
+    const model = availableModels.find((m) => m.id === lookupId)
+      || availableModels.find((m) => m.id === baseModelId)
       || {
         id: baseModelId,
         name: baseModelId,
