@@ -1,5 +1,5 @@
-import { useMemo } from 'react'
-import { createPatch } from 'diff'
+import ReactDiffViewer, { DiffMethod } from 'react-diff-viewer-continued'
+import { Highlight, themes } from 'prism-react-renderer'
 import { CopyButton } from '../shared/CopyButton'
 
 type Props = {
@@ -8,21 +8,92 @@ type Props = {
   newString: string
 }
 
-type DiffLine = {
-  oldLineNo: number | null
-  newLineNo: number | null
-  type: 'added' | 'removed' | 'context'
-  content: string
+function inferLanguage(filePath: string): string {
+  const ext = filePath.split('.').pop()?.toLowerCase()
+  const langMap: Record<string, string> = {
+    ts: 'typescript', tsx: 'tsx', js: 'javascript', jsx: 'jsx',
+    py: 'python', rs: 'rust', go: 'go', rb: 'ruby',
+    json: 'json', yaml: 'yaml', yml: 'yaml', toml: 'toml',
+    md: 'markdown', css: 'css', html: 'markup', xml: 'markup',
+    sql: 'sql', sh: 'bash', bash: 'bash', zsh: 'bash',
+  }
+  return langMap[ext ?? ''] || 'text'
+}
+
+function highlightSyntax(str: string, language: string) {
+  return (
+    <Highlight theme={themes.github} code={str} language={language}>
+      {({ tokens, getTokenProps }) => (
+        <>
+          {tokens.map((line, i) => (
+            <span key={i}>
+              {line.map((token, key) => (
+                <span key={key} {...getTokenProps({ token })} />
+              ))}
+            </span>
+          ))}
+        </>
+      )}
+    </Highlight>
+  )
+}
+
+const diffStyles = {
+  variables: {
+    light: {
+      diffViewerBackground: '#ffffff',
+      diffViewerColor: '#24292f',
+      addedBackground: '#dafbe1',
+      addedColor: '#24292f',
+      removedBackground: '#ffebe9',
+      removedColor: '#24292f',
+      wordAddedBackground: '#abf2bc',
+      wordRemovedBackground: '#ff818266',
+      addedGutterBackground: '#ccffd8',
+      removedGutterBackground: '#ffd7d5',
+      gutterBackground: '#f6f8fa',
+      gutterBackgroundDark: '#f0f1f3',
+      highlightBackground: '#fffbdd',
+      highlightGutterBackground: '#fff5b1',
+      codeFoldGutterBackground: '#dbedff',
+      codeFoldBackground: '#f1f8ff',
+      emptyLineBackground: '#fafbfc',
+      gutterColor: '#8b949e',
+      addedGutterColor: '#1a7f37',
+      removedGutterColor: '#cf222e',
+      codeFoldContentColor: '#57606a',
+      diffViewerTitleBackground: '#fafbfc',
+      diffViewerTitleColor: '#57606a',
+      diffViewerTitleBorderColor: '#d0d7de',
+    },
+  },
+  diffContainer: {
+    borderRadius: '0',
+    fontSize: '12px',
+    lineHeight: '1.3',
+    fontFamily: 'var(--font-mono)',
+  },
+  line: {
+    padding: '1px 0',
+  },
+  gutter: {
+    padding: '1px 8px',
+    minWidth: '40px',
+    fontSize: '11px',
+  },
+  wordDiff: {
+    padding: '1px 2px',
+    borderRadius: '2px',
+  },
 }
 
 export function DiffViewer({ filePath, oldString, newString }: Props) {
-  const patch = useMemo(
-    () => createPatch(filePath, oldString, newString, 'before', 'after', { context: 3 }),
-    [filePath, newString, oldString],
-  )
-  const lines = useMemo(() => parsePatchLines(patch), [patch])
-  const additions = lines.filter((line) => line.type === 'added').length
-  const deletions = lines.filter((line) => line.type === 'removed').length
+  const language = inferLanguage(filePath)
+
+  const oldLines = oldString.split('\n')
+  const newLines = newString.split('\n')
+  const additions = newLines.filter((l, i) => l !== (oldLines[i] ?? null)).length
+  const deletions = oldLines.filter((l, i) => l !== (newLines[i] ?? null)).length
 
   return (
     <div className="overflow-hidden rounded-lg border border-[#d0d7de] bg-[#f6f8fa] text-[#24292f]">
@@ -36,99 +107,25 @@ export function DiffViewer({ filePath, oldString, newString }: Props) {
             <span className="rounded-full bg-[#ffebe9] px-2 py-0.5 text-[#cf222e]">-{deletions}</span>
           </div>
         </div>
-
         <CopyButton
-          text={patch}
-          label="Copy patch"
+          text={`--- ${filePath}\n+++ ${filePath}`}
+          label="Copy path"
           className="rounded-md border border-[#d0d7de] bg-white px-2 py-1 text-[11px] text-[#57606a] transition-colors hover:bg-[#f3f4f6] hover:text-[#24292f]"
         />
       </div>
 
-      <div className="max-h-[360px] overflow-auto">
-        <div className="min-w-full">
-          {lines.map((line, index) => {
-            const rowClass =
-              line.type === 'added'
-                ? 'bg-[#dafbe1]/60 border-l-2 border-l-[#1a7f37]'
-                : line.type === 'removed'
-                  ? 'bg-[#ffebe9]/60 border-l-2 border-l-[#cf222e]'
-                  : 'bg-white border-l-2 border-l-transparent'
-            const prefix = line.type === 'added' ? '+' : line.type === 'removed' ? '-' : ' '
-            const prefixColor =
-              line.type === 'added'
-                ? 'text-[#1a7f37]'
-                : line.type === 'removed'
-                  ? 'text-[#cf222e]'
-                  : 'text-[#57606a]'
-
-            return (
-              <div
-                key={`${line.oldLineNo}-${line.newLineNo}-${index}`}
-                className={`grid grid-cols-[2.5rem,2.5rem,1.25rem,minmax(0,1fr)] gap-0 font-[var(--font-mono)] text-[12px] leading-[1.3] ${rowClass}`}
-              >
-                <span className="select-none border-r border-[#eaeef2] px-2 py-px text-right text-[11px] text-[#8b949e]">
-                  {line.oldLineNo ?? ''}
-                </span>
-                <span className="select-none border-r border-[#eaeef2] px-2 py-px text-right text-[11px] text-[#8b949e]">
-                  {line.newLineNo ?? ''}
-                </span>
-                <span className={`border-r border-[#eaeef2] px-1 py-px text-center ${prefixColor}`}>{prefix}</span>
-                <span className="whitespace-pre-wrap break-words px-3 py-px text-[#24292f]">{line.content}</span>
-              </div>
-            )
-          })}
-        </div>
+      <div className="max-h-[400px] overflow-auto">
+        <ReactDiffViewer
+          oldValue={oldString}
+          newValue={newString}
+          splitView={false}
+          compareMethod={DiffMethod.WORDS}
+          renderContent={(str) => highlightSyntax(str, language)}
+          hideLineNumbers={false}
+          styles={diffStyles}
+          useDarkTheme={false}
+        />
       </div>
     </div>
   )
-}
-
-function parsePatchLines(patch: string): DiffLine[] {
-  const output: DiffLine[] = []
-  const patchLines = patch.split('\n')
-  let oldLineNo = 0
-  let newLineNo = 0
-
-  for (const line of patchLines) {
-    if (
-      line.startsWith('Index:') ||
-      line.startsWith('===') ||
-      line.startsWith('---') ||
-      line.startsWith('+++')
-    ) {
-      continue
-    }
-
-    if (line.startsWith('@@')) {
-      const match = line.match(/@@ -(\d+)(?:,\d+)? \+(\d+)/)
-      if (match?.[1]) oldLineNo = parseInt(match[1], 10) - 1
-      if (match?.[2]) newLineNo = parseInt(match[2], 10) - 1
-      continue
-    }
-
-    if (line.startsWith('\\ No newline')) continue
-
-    if (line.startsWith('+')) {
-      newLineNo += 1
-      output.push({ oldLineNo: null, newLineNo, type: 'added', content: line.slice(1) })
-      continue
-    }
-
-    if (line.startsWith('-')) {
-      oldLineNo += 1
-      output.push({ oldLineNo, newLineNo: null, type: 'removed', content: line.slice(1) })
-      continue
-    }
-
-    oldLineNo += 1
-    newLineNo += 1
-    output.push({
-      oldLineNo,
-      newLineNo,
-      type: 'context',
-      content: line.startsWith(' ') ? line.slice(1) : line,
-    })
-  }
-
-  return output
 }
