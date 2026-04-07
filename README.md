@@ -116,6 +116,42 @@ bun --env-file=.env ./src/entrypoints/cli.tsx
 export PATH="$HOME/path/to/claude-code-haha/bin:$PATH"
 ```
 
+### 5. 桌面端联调（Desktop）
+
+如果你在开发或测试 `desktop/` 前端，需要同时启动 API 服务端和桌面前端。
+
+#### 5.1 启动服务端
+
+```bash
+cd /Users/nanmi/workspace/myself_code/claude-code-haha
+SERVER_PORT=3456 bun run src/server/index.ts
+```
+
+可选自检：
+
+```bash
+curl http://127.0.0.1:3456/health
+```
+
+#### 5.2 启动桌面前端
+
+```bash
+cd /Users/nanmi/workspace/myself_code/claude-code-haha/desktop
+bun run dev --host 127.0.0.1 --port 2024
+```
+
+然后在浏览器打开：
+
+```text
+http://127.0.0.1:2024
+```
+
+#### 5.3 常见注意事项
+
+- 如果 `3456` 端口已经被旧服务端占用，先执行 `lsof -nP -iTCP:3456 -sTCP:LISTEN` 找到 PID，再 `kill <PID>`。
+- 测试聊天时建议新建一个 session，并重新选择一个真实存在的工作目录。
+- 如果某个旧 session 绑定的目录已被删除，服务端会返回 `Working directory does not exist`，这和服务端是否启动是两回事。
+
 ---
 
 ## 技术栈

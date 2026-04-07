@@ -1,0 +1,19 @@
+{
+  "tasks": [
+    {
+      "id": "b4851079",
+      "cron": "0 9 * * *",
+      "prompt": "test prompt",
+      "createdAt": 1775497208158,
+      "recurring": true,
+      "name": "test-name",
+      "description": "test description",
+      "folder": "/test/folder",
+      "model": "claude-opus-4-6",
+      "permissionMode": "ask",
+      "worktree": false,
+      "frequency": "daily",
+      "scheduledTime": "09:00"
+    }
+  ]
+}

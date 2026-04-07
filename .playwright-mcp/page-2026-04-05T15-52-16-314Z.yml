@@ -1,0 +1,47 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - button [ref=e6]:
+        - img [ref=e7]
+      - button [ref=e9]:
+        - img [ref=e10]
+    - button "Code" [ref=e13]
+  - generic [ref=e14]:
+    - complementary [ref=e15]:
+      - generic [ref=e16]:
+        - button "New session" [ref=e17]:
+          - img [ref=e18]
+          - text: New session
+        - button "Scheduled" [ref=e19]:
+          - img [ref=e20]
+          - text: Scheduled
+      - textbox "Search sessions..." [ref=e24]
+      - generic [ref=e26]: No sessions yet
+    - main [ref=e27]:
+      - generic [ref=e28]:
+        - generic [ref=e30]:
+          - img [ref=e32]
+          - heading "New session" [level=1] [ref=e49]
+          - paragraph [ref=e50]: Start a fresh coding session. Claude is ready to help you build, debug, and architect your project.
+        - generic [ref=e52]:
+          - generic [ref=e53]:
+            - textbox "Ask anything..." [active] [ref=e54]
+            - generic [ref=e55]:
+              - button "add" [ref=e56]:
+                - generic [ref=e57]: add
+              - button "mic" [ref=e58]:
+                - generic [ref=e59]: mic
+          - generic [ref=e60]:
+            - button "lock_open Ask permissions" [ref=e62]:
+              - generic [ref=e63]: lock_open
+              - text: Ask permissions
+            - generic [ref=e64]:
+              - generic [ref=e65] [cursor=pointer]:
+                - generic [ref=e66]: auto_awesome
+                - text: Sonnet 4.6
+                - generic [ref=e67]: expand_more
+              - button "arrow_upward" [disabled] [ref=e68]:
+                - generic [ref=e69]: arrow_upward
+  - generic [ref=e70]:
+    - generic [ref=e73]: Disconnected
+    - generic [ref=e74]: Sonnet 4.6

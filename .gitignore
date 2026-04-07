@@ -7,6 +7,22 @@ node_modules
 .runtime/
 extracted-natives/
 
+# Playwright MCP snapshots & logs
+.playwright-mcp/
+
+# OMX state/logs
+.omx/
+
+# E2E screenshots
+e2e-*.png
+
+# Desktop build output
+desktop/dist/
+
+# Claude worktrees
+.claude/worktrees/
+.claude/scheduled_tasks.lock
+
 # VitePress
 docs/.vitepress/dist
 docs/.vitepress/cache

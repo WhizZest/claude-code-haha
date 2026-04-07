@@ -116,6 +116,42 @@ Add `bin/` to your PATH to run from any directory. See [Global Usage Guide](docs
 export PATH="$HOME/path/to/claude-code-haha/bin:$PATH"
 ```
 
+### 5. Desktop Development
+
+If you are developing or testing the `desktop/` frontend, start both the API server and the desktop frontend.
+
+#### 5.1 Start the API server
+
+```bash
+cd /Users/nanmi/workspace/myself_code/claude-code-haha
+SERVER_PORT=3456 bun run src/server/index.ts
+```
+
+Optional health check:
+
+```bash
+curl http://127.0.0.1:3456/health
+```
+
+#### 5.2 Start the desktop frontend
+
+```bash
+cd /Users/nanmi/workspace/myself_code/claude-code-haha/desktop
+bun run dev --host 127.0.0.1 --port 2024
+```
+
+Then open:
+
+```text
+http://127.0.0.1:2024
+```
+
+#### 5.3 Notes
+
+- If port `3456` is already occupied by an old server process, run `lsof -nP -iTCP:3456 -sTCP:LISTEN`, find the PID, then `kill <PID>`.
+- For chat testing, create a fresh session and re-select a real working directory.
+- If an old session points to a deleted directory, the server will return `Working directory does not exist`. That is separate from whether the API server is running.
+
 ---
 
 ## Tech Stack

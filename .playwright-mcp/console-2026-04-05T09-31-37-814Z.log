@@ -1,0 +1,2 @@
+[      66ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:1420/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=92146c30:21608
+[   48131ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3456/api/sessions/0440d540-eaf8-4014-b81f-f9fc6639dd42/messages:0

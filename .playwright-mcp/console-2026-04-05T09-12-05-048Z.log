@@ -1,0 +1,22 @@
+[      51ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:1420/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=92146c30:21608
+[     773ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at SessionGroup (http://localhost:1420/src/components/layout/Sidebar.tsx:207:3)
+    at div
+    at aside
+    at Sidebar (http://localhost:1420/src/components/layout/Sidebar.tsx:23:74)
+    at div
+    at div
+    at AppShell (http://localhost:1420/src/components/layout/AppShell.tsx?t=1775380147472:28:25)
+    at App @ http://localhost:1420/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=92146c30:520
+[    1346ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at SessionGroup (http://localhost:1420/src/components/layout/Sidebar.tsx:207:3)
+    at div
+    at aside
+    at Sidebar (http://localhost:1420/src/components/layout/Sidebar.tsx:23:74)
+    at div
+    at div
+    at AppShell (http://localhost:1420/src/components/layout/AppShell.tsx?t=1775380147472:28:25)
+    at App @ http://localhost:1420/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=92146c30:520
+[  681760ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://127.0.0.1:3456/api/sessions/undefined/messages:0

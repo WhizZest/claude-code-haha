@@ -1,0 +1,57 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - button [ref=e6]:
+        - img [ref=e7]
+      - button [ref=e9]:
+        - img [ref=e10]
+    - button "Code" [ref=e13]
+  - generic [ref=e14]:
+    - complementary [ref=e15]:
+      - generic [ref=e16]:
+        - button "New session" [ref=e17]:
+          - img [ref=e18]
+          - text: New session
+        - button "Scheduled" [ref=e19]:
+          - img [ref=e20]
+          - text: Scheduled
+      - button "All projects ▾" [ref=e24]:
+        - generic [ref=e25]: All projects
+        - generic [ref=e26]: ▾
+      - textbox "Search sessions..." [ref=e28]
+    - main [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e33]:
+          - img [ref=e35]
+          - heading "New session" [level=1] [ref=e52]
+          - paragraph [ref=e53]: Start a fresh coding session. Claude is ready to help you build, debug, and architect your project.
+        - generic [ref=e55]:
+          - generic [ref=e56]:
+            - textbox "Ask anything..." [active] [ref=e57]
+            - generic [ref=e58]:
+              - button "add" [ref=e59]:
+                - generic [ref=e60]: add
+              - button "mic" [ref=e61]:
+                - generic [ref=e62]: mic
+          - generic [ref=e63]:
+            - button "lock_open Ask permissions" [ref=e65]:
+              - generic [ref=e66]: lock_open
+              - text: Ask permissions
+            - generic [ref=e67]:
+              - generic [ref=e68] [cursor=pointer]:
+                - generic [ref=e69]: auto_awesome
+                - text: Sonnet 4.6
+                - generic [ref=e70]: expand_more
+              - button "arrow_upward" [disabled] [ref=e71]:
+                - generic [ref=e72]: arrow_upward
+  - generic [ref=e73]:
+    - generic [ref=e74]:
+      - generic [ref=e75]: "N"
+      - generic [ref=e76]:
+        - generic [ref=e77]: nanmi
+        - generic [ref=e78]: Max plan
+    - generic [ref=e80]:
+      - img [ref=e81]
+      - generic [ref=e83]: claude-code-haha
+      - img [ref=e84]
+      - generic [ref=e88]: main

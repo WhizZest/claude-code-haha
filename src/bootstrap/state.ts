@@ -1289,6 +1289,22 @@ export type SessionCronTask = {
    * instead of the main REPL command queue. Session-only — never written to disk.
    */
   agentId?: string
+  /** Human-readable task name. */
+  name?: string
+  /** Task description. */
+  description?: string
+  /** Working directory for the task execution. */
+  folder?: string
+  /** Model to use. */
+  model?: string
+  /** Permission mode. */
+  permissionMode?: string
+  /** Whether to use git worktree for execution. */
+  worktree?: boolean
+  /** Schedule frequency for UI display. */
+  frequency?: string
+  /** Time string for scheduled execution. */
+  scheduledTime?: string
 }
 
 export function getSessionCronTasks(): SessionCronTask[] {

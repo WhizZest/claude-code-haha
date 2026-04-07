@@ -29,6 +29,7 @@ const SleepTool =
 const cronTools = feature('AGENT_TRIGGERS')
   ? [
       require('./tools/ScheduleCronTool/CronCreateTool.js').CronCreateTool,
+      require('./tools/ScheduleCronTool/CronUpdateTool.js').CronUpdateTool,
       require('./tools/ScheduleCronTool/CronDeleteTool.js').CronDeleteTool,
       require('./tools/ScheduleCronTool/CronListTool.js').CronListTool,
     ]

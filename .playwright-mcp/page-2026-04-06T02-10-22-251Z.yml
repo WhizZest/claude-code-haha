@@ -1,0 +1,78 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e6]: Claude Code Companion
+    - generic [ref=e7]:
+      - button [ref=e8]:
+        - img [ref=e9]
+      - button [ref=e11]:
+        - img [ref=e12]
+    - generic [ref=e14]:
+      - button "code Code" [ref=e15]:
+        - generic [ref=e16]: code
+        - text: Code
+      - button "terminal Terminal" [ref=e17]:
+        - generic [ref=e18]: terminal
+        - text: Terminal
+      - button "history History" [ref=e19]:
+        - generic [ref=e20]: history
+        - text: History
+    - button "settings" [ref=e22]:
+      - generic [ref=e23]: settings
+  - generic [ref=e24]:
+    - complementary [ref=e25]:
+      - generic [ref=e26]:
+        - button "New session" [ref=e27]:
+          - img [ref=e28]
+          - text: New session
+        - button "Scheduled" [ref=e29]:
+          - img [ref=e30]
+          - text: Scheduled
+      - textbox "Search sessions..." [ref=e34]
+      - generic [ref=e36]: No sessions yet
+    - main [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e40]:
+          - img [ref=e42]
+          - heading "New session" [level=1] [ref=e59]
+          - paragraph [ref=e60]: Start a fresh coding session. Claude is ready to help you build, debug, and architect your project.
+        - generic [ref=e62]:
+          - generic [ref=e63]:
+            - textbox "Ask anything..." [active] [ref=e65]
+            - generic [ref=e66]:
+              - generic [ref=e67]:
+                - button "add" [ref=e68]:
+                  - generic [ref=e69]: add
+                - button "verified_user Ask permissions expand_more" [ref=e71]:
+                  - generic [ref=e72]: verified_user
+                  - generic [ref=e73]: Ask permissions
+                  - generic [ref=e74]: expand_more
+              - generic [ref=e75]:
+                - button "auto_awesome Haiku 4.5 expand_more" [ref=e77]:
+                  - generic [ref=e78]: auto_awesome
+                  - generic [ref=e79]: Haiku 4.5
+                  - generic [ref=e80]: expand_more
+                - button "mic" [ref=e81]:
+                  - generic [ref=e82]: mic
+          - generic [ref=e83]:
+            - button "folder_open Select a project..." [ref=e85]:
+              - generic [ref=e86]: folder_open
+              - text: Select a project...
+            - generic [ref=e87]:
+              - generic [ref=e88] [cursor=pointer]:
+                - checkbox "worktree" [ref=e89]
+                - generic [ref=e90]: worktree
+              - button "computer Local expand_more" [ref=e91]:
+                - generic [ref=e92]: computer
+                - generic [ref=e93]: Local
+                - generic [ref=e94]: expand_more
+  - generic [ref=e95]:
+    - generic [ref=e99]: Disconnected
+    - generic [ref=e100]:
+      - generic [ref=e101]:
+        - img [ref=e102]
+        - generic [ref=e106]: main branch
+      - button "account_tree worktree toggle" [ref=e107]:
+        - generic [ref=e108]: account_tree
+        - generic [ref=e109]: worktree toggle
+      - generic [ref=e112]: local watch
+      - generic [ref=e113]: Haiku 4.5

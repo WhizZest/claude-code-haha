@@ -1,0 +1,169 @@
+[      40ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:21608
+[     648ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[     648ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[     648ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    1155ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    1155ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    1156ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    8870ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    8870ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    8870ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9411ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9411ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9411ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9412ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9412ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9412ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9417ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9417ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[    9417ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775408101846:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[  216404ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 676109de-35f8-401d-b86c-143bd68b6f09 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775409551383:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[  216404ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 4dab0342-8473-4302-ad6b-b7b854c8995c 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775409551383:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520
+[  216404ms] [ERROR] Warning: Encountered two children with the same key, `%s`. Keys should be unique so that components maintain their identity across updates. Non-unique keys may cause children to be duplicated and/or omitted — the behavior is unsupported and could change in a future version.%s 63f76843-a9bd-4169-af63-bdbda0002082 
+    at div
+    at aside
+    at Sidebar (http://localhost:2024/src/components/layout/Sidebar.tsx?t=1775407762199:23:104)
+    at div
+    at div
+    at AppShell (http://localhost:2024/src/components/layout/AppShell.tsx?t=1775409551383:28:25)
+    at App @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:520

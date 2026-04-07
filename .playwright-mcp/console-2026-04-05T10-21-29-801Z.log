@@ -1,0 +1,10 @@
+[15396495ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:1420/node_modules/.vite/deps/react-dom_client.js?v=6559a82c:14336
+[15571347ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:1420/@vite/client:968
+[15572442ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:1420/node_modules/.vite/deps/react-dom_client.js?v=893c6b17:14336
+[15574377ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:1420/__opencut_api/analyze?input=%2FVolumes%2FEdit_A%2FSequence_A1_Retake_04.mp4:0
+[15575612ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:1420/__opencut_api/analyze?input=%2FVolumes%2FEdit_A%2FSequence_A1_Retake_04.mp4:0
+[15583399ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:1420/@vite/client:968
+[15584497ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://127.0.0.1:1420/node_modules/.vite/deps/react-dom_client.js?v=4d27e1fd:14336
+[15585887ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:1420/__opencut_api/analyze?input=%2FVolumes%2FEdit_A%2FSequence_A1_Retake_04.mp4:0
+[15586696ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://127.0.0.1:1420/__opencut_api/analyze?input=%2FVolumes%2FEdit_A%2FSequence_A1_Retake_04.mp4:0
+[16409514ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:1420/@vite/client:968

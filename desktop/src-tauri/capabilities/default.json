@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/nicegui/nicegui/main/nicegui/static/tauri-capabilities-schema-v2.json",
+  "identifier": "default",
+  "description": "Default capabilities for Claude Code Desktop",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "shell:allow-open",
+    "shell:allow-execute",
+    "dialog:allow-open",
+    "dialog:allow-save",
+    "process:allow-exit",
+    "process:allow-restart"
+  ]
+}

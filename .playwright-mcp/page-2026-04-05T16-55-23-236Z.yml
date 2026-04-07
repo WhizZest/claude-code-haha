@@ -1,0 +1,69 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e6]: Claude Code Companion
+    - generic [ref=e7]:
+      - button [ref=e8]:
+        - img [ref=e9]
+      - button [ref=e11]:
+        - img [ref=e12]
+    - generic [ref=e14]:
+      - button "code Code" [ref=e15]:
+        - generic [ref=e16]: code
+        - text: Code
+      - button "terminal Terminal" [ref=e17]:
+        - generic [ref=e18]: terminal
+        - text: Terminal
+      - button "history History" [ref=e19]:
+        - generic [ref=e20]: history
+        - text: History
+    - button "settings" [ref=e22]:
+      - generic [ref=e23]: settings
+  - generic [ref=e24]:
+    - complementary [ref=e25]:
+      - generic [ref=e26]:
+        - button "New session" [ref=e27]:
+          - img [ref=e28]
+          - text: New session
+        - button "Scheduled" [ref=e29]:
+          - img [ref=e30]
+          - text: Scheduled
+      - textbox "Search sessions..." [ref=e34]
+      - generic [ref=e36]: No sessions yet
+    - main [ref=e37]:
+      - generic [ref=e38]:
+        - generic [ref=e40]:
+          - img [ref=e42]
+          - heading "New session" [level=1] [ref=e59]
+          - paragraph [ref=e60]: Start a fresh coding session. Claude is ready to help you build, debug, and architect your project.
+        - generic [ref=e62]:
+          - button "folder Select working directory... unfold_more" [ref=e64]:
+            - generic [ref=e65]: folder
+            - generic [ref=e66]: Select working directory...
+            - generic [ref=e67]: unfold_more
+          - generic [ref=e68]:
+            - textbox "Ask anything..." [active] [ref=e69]
+            - button "add" [ref=e71]:
+              - generic [ref=e72]: add
+          - generic [ref=e73]:
+            - button "architecture Plan mode expand_more" [ref=e76]:
+              - generic [ref=e77]: architecture
+              - generic [ref=e78]: Plan mode
+              - generic [ref=e79]: expand_more
+            - generic [ref=e80]:
+              - button "auto_awesome Opus 4.6 1M expand_more" [ref=e82]:
+                - generic [ref=e83]: auto_awesome
+                - generic [ref=e84]: Opus 4.6 1M
+                - generic [ref=e85]: expand_more
+              - button "arrow_upward" [disabled] [ref=e86]:
+                - generic [ref=e87]: arrow_upward
+  - generic [ref=e88]:
+    - generic [ref=e92]: Disconnected
+    - generic [ref=e93]:
+      - generic [ref=e94]:
+        - img [ref=e95]
+        - generic [ref=e99]: main branch
+      - button "account_tree worktree toggle" [ref=e100]:
+        - generic [ref=e101]: account_tree
+        - generic [ref=e102]: worktree toggle
+      - generic [ref=e105]: local watch
+      - generic [ref=e106]: Opus 4.6 1M

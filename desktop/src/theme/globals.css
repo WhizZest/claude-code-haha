@@ -1,0 +1,175 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Code highlighting is handled by prism-react-renderer (inline styles) */
+
+/* ─── Tailwind Theme Override (matches prototype design system) ─── */
+@theme {
+  --color-primary: #8F482F;
+  --color-primary-container: #AD5F45;
+  --color-primary-fixed: #FFDBD0;
+  --color-primary-fixed-dim: #FFB59D;
+
+  --color-on-primary: #FFFFFF;
+  --color-on-surface: #1B1C1A;
+  --color-on-surface-variant: #54433E;
+
+  --color-surface: #FAF9F5;
+  --color-surface-bright: #FAF9F5;
+  --color-surface-dim: #DBDAD6;
+  --color-surface-container: #EFEEEA;
+  --color-surface-container-low: #F4F4F0;
+  --color-surface-container-high: #E9E8E4;
+  --color-surface-container-highest: #E3E2DF;
+  --color-surface-container-lowest: #FFFFFF;
+  --color-surface-variant: #E3E2DF;
+
+  --color-background: #FAF9F5;
+
+  --color-outline: #87736D;
+  --color-outline-variant: #DAC1BA;
+
+  --color-secondary: #2D628F;
+  --color-secondary-container: #9ACBFE;
+  --color-tertiary: #4F6237;
+  --color-tertiary-container: #677B4E;
+
+  --color-error: #BA1A1A;
+  --color-error-container: #FFDAD6;
+
+  --color-inverse-surface: #2F312E;
+  --color-inverse-on-surface: #F2F1ED;
+  --color-inverse-primary: #FFB59D;
+
+  --color-success: #16A34A;
+  --color-warning: #CA8A04;
+
+  --font-headline: 'Manrope', sans-serif;
+  --font-body: 'Inter', sans-serif;
+  --font-label: 'Inter', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* ─── Semantic Aliases (used by layout & infrastructure components) ── */
+:root {
+  /* Layout dimensions */
+  --sidebar-width: 280px;
+  --titlebar-height: 40px;
+  --statusbar-height: 36px;
+
+  /* Surface aliases */
+  --color-surface-sidebar: var(--color-surface-container-low);
+  --color-surface-hover: var(--color-surface-container-high);
+  --color-surface-selected: var(--color-surface-container);
+
+  /* Border aliases */
+  --color-border: var(--color-outline-variant);
+  --color-border-focus: var(--color-primary);
+  --color-border-separator: var(--color-outline-variant);
+
+  /* Text aliases */
+  --color-text-primary: var(--color-on-surface);
+  --color-text-secondary: var(--color-on-surface-variant);
+  --color-text-tertiary: var(--color-outline);
+
+  /* Info surface (for team status bar, notifications) */
+  --color-surface-info: var(--color-surface-container-low);
+
+  /* Brand & accents */
+  --color-brand: var(--color-primary);
+  --color-text-accent: var(--color-secondary);
+
+  /* Shadows */
+  --shadow-dropdown: 0 4px 20px rgba(27, 28, 26, 0.04), 0 12px 40px rgba(27, 28, 26, 0.08);
+
+  /* Button colors */
+  --color-btn-primary-bg: var(--color-primary);
+  --color-btn-primary-fg: var(--color-on-primary);
+  --color-btn-primary-bg-hover: var(--color-primary-container);
+  --color-btn-primary-bg-active: var(--color-primary);
+
+  /* User message bubble */
+  --color-surface-user-msg: var(--color-surface-container);
+
+  /* Radii */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+}
+
+/* ─── Material Symbols ─────────────────────────────────────────── */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+  vertical-align: middle;
+}
+
+/* ─── Base styles ──────────────────────────────────────────────── */
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  color: var(--color-on-surface);
+  background-color: var(--color-background);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tauri drag region */
+[data-tauri-drag-region] {
+  -webkit-app-region: drag;
+}
+button, input, textarea, select, a, [role="button"] {
+  -webkit-app-region: no-drag;
+}
+
+/* Custom shadow from prototype */
+.custom-shadow {
+  box-shadow: 0 4px 20px rgba(27, 28, 26, 0.04), 0 12px 40px rgba(27, 28, 26, 0.08);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--color-outline); border-radius: 9999px; opacity: 0.3; }
+::-webkit-scrollbar-thumb:hover { opacity: 0.6; }
+
+/* Animations */
+@keyframes shimmer {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+.animate-shimmer { animation: shimmer 1.5s ease-in-out infinite; }
+.animate-spin { animation: spin 1s linear infinite; }
+.animate-pulse-dot { animation: pulse-dot 1.5s ease-in-out infinite; }
+
+/* Progress bar */
+@keyframes progress-fill {
+  from { width: 0%; }
+}

@@ -27,6 +27,14 @@ const outputSchema = lazySchema(() =>
         prompt: z.string(),
         recurring: z.boolean().optional(),
         durable: z.boolean().optional(),
+        name: z.string().optional(),
+        description: z.string().optional(),
+        folder: z.string().optional(),
+        model: z.string().optional(),
+        permissionMode: z.string().optional(),
+        worktree: z.boolean().optional(),
+        frequency: z.string().optional(),
+        scheduledTime: z.string().optional(),
       }),
     ),
   }),
@@ -74,6 +82,14 @@ export const CronListTool = buildTool({
       prompt: t.prompt,
       ...(t.recurring ? { recurring: true } : {}),
       ...(t.durable === false ? { durable: false } : {}),
+      ...(t.name ? { name: t.name } : {}),
+      ...(t.description ? { description: t.description } : {}),
+      ...(t.folder ? { folder: t.folder } : {}),
+      ...(t.model ? { model: t.model } : {}),
+      ...(t.permissionMode ? { permissionMode: t.permissionMode } : {}),
+      ...(t.worktree !== undefined ? { worktree: t.worktree } : {}),
+      ...(t.frequency ? { frequency: t.frequency } : {}),
+      ...(t.scheduledTime ? { scheduledTime: t.scheduledTime } : {}),
     }))
     return { data: { jobs } }
   },
@@ -86,7 +102,7 @@ export const CronListTool = buildTool({
           ? output.jobs
               .map(
                 j =>
-                  `${j.id} — ${j.humanSchedule}${j.recurring ? ' (recurring)' : ' (one-shot)'}${j.durable === false ? ' [session-only]' : ''}: ${truncate(j.prompt, 80, true)}`,
+                  `${j.id}${j.name ? ` [${j.name}]` : ''} — ${j.humanSchedule}${j.recurring ? ' (recurring)' : ' (one-shot)'}${j.durable === false ? ' [session-only]' : ''}${j.folder ? ` (${j.folder})` : ''}: ${truncate(j.prompt, 80, true)}`,
               )
               .join('\n')
           : 'No scheduled jobs.',

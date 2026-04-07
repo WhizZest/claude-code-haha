@@ -1,0 +1,17 @@
+[      75ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:21608
+[ 4122286ms] [ERROR] WebSocket connection to 'ws://localhost:2024/?token=07SjUwxvZcW_' failed:  @ http://localhost:2024/@vite/client:801
+[ 4122286ms] [ERROR] WebSocket connection to 'ws://127.0.0.1:3456/ws/18965422-196b-488f-a040-4ac37fb58cdf' failed:  @ http://localhost:2024/src/api/websocket.ts?t=1775440605437:24
+[ 4122286ms] [LOG] [vite] server connection lost. Polling for restart... @ http://localhost:2024/@vite/client:963
+[ 4122398ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:21608
+[ 4122416ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/sessions?limit=100:0
+[ 4122419ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/permissions/mode:0
+[ 4122419ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models/current:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/effort:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/sessions?limit=100:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/permissions/mode:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models/current:0
+[ 4122420ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/effort:0
+[ 6503043ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:21608
+[ 6622816ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:2024/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=c5a556db:21608

@@ -3,6 +3,7 @@ import { MessageResponse } from '../../components/MessageResponse.js';
 import { Text } from '../../ink.js';
 import { truncate } from '../../utils/format.js';
 import type { CreateOutput } from './CronCreateTool.js';
+import type { UpdateOutput } from './CronUpdateTool.js';
 import type { DeleteOutput } from './CronDeleteTool.js';
 import type { ListOutput } from './CronListTool.js';
 
@@ -18,6 +19,27 @@ export function renderCreateResultMessage(output: CreateOutput): React.ReactNode
   return <MessageResponse>
       <Text>
         Scheduled <Text bold>{output.id}</Text>{' '}
+        <Text dimColor>({output.humanSchedule})</Text>
+      </Text>
+    </MessageResponse>;
+}
+
+// --- CronUpdate -------------------------------------------------------------
+
+export function renderUpdateToolUseMessage(input: Partial<{
+  id: string;
+}>): React.ReactNode {
+  return input.id ?? '';
+}
+export function renderUpdateResultMessage(output: UpdateOutput): React.ReactNode {
+  if (!output.updated) {
+    return <MessageResponse>
+        <Text dimColor>Job {output.id} not found</Text>
+      </MessageResponse>;
+  }
+  return <MessageResponse>
+      <Text>
+        Updated <Text bold>{output.id}</Text>{' '}
         <Text dimColor>({output.humanSchedule})</Text>
       </Text>
     </MessageResponse>;
@@ -51,7 +73,7 @@ export function renderListResultMessage(output: ListOutput): React.ReactNode {
   }
   return <MessageResponse>
       {output.jobs.map(j => <Text key={j.id}>
-          <Text bold>{j.id}</Text> <Text dimColor>{j.humanSchedule}</Text>
+          <Text bold>{j.id}</Text>{j.name ? <Text> [{j.name}]</Text> : null} <Text dimColor>{j.humanSchedule}</Text>{j.folder ? <Text dimColor> ({j.folder})</Text> : null}
         </Text>)}
     </MessageResponse>;
 }

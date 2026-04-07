@@ -1,0 +1,12 @@
+[    1153ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ http://localhost:1420/node_modules/.vite/deps/chunk-VIJJTZRL.js?v=92146c30:21608
+[    1197ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/sessions?limit=100:0
+[    1197ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/permissions/mode:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models/current:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/effort:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/sessions?limit=100:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/permissions/mode:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/models/current:0
+[    1198ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://127.0.0.1:3456/api/effort:0
+[    1200ms] [ERROR] Failed to load resource: the server responded with a status of 404 (Not Found) @ http://localhost:1420/favicon.ico:0

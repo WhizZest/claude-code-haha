@@ -1,0 +1,50 @@
+- generic [ref=e3]:
+  - complementary [ref=e4]:
+    - generic [ref=e5]:
+      - button "New session" [ref=e6]:
+        - img [ref=e7]
+        - text: New session
+      - button "Scheduled" [ref=e8]:
+        - img [ref=e9]
+        - text: Scheduled
+    - textbox "Search sessions..." [ref=e13]
+    - generic [ref=e15]: No sessions yet
+    - button "settings Settings" [ref=e17]:
+      - generic [ref=e18]: settings
+      - text: Settings
+  - main [ref=e19]:
+    - generic [ref=e20]:
+      - generic [ref=e22]:
+        - img [ref=e24]
+        - heading "New session" [level=1] [ref=e41]
+        - paragraph [ref=e42]: Start a fresh coding session. Claude is ready to help you build, debug, and architect your project.
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - textbox "Ask anything..." [active] [ref=e47]
+          - generic [ref=e48]:
+            - generic [ref=e49]:
+              - button "add" [ref=e50]:
+                - generic [ref=e51]: add
+              - button "verified_user Ask permissions expand_more" [ref=e53]:
+                - generic [ref=e54]: verified_user
+                - generic [ref=e55]: Ask permissions
+                - generic [ref=e56]: expand_more
+            - generic [ref=e57]:
+              - button "auto_awesome Haiku 4.5 expand_more" [ref=e59]:
+                - generic [ref=e60]: auto_awesome
+                - generic [ref=e61]: Haiku 4.5
+                - generic [ref=e62]: expand_more
+              - button "mic" [ref=e63]:
+                - generic [ref=e64]: mic
+        - generic [ref=e65]:
+          - button "folder_open Select a project..." [ref=e67]:
+            - generic [ref=e68]: folder_open
+            - text: Select a project...
+          - generic [ref=e69]:
+            - generic [ref=e70] [cursor=pointer]:
+              - checkbox "worktree" [ref=e71]
+              - generic [ref=e72]: worktree
+            - button "computer Local expand_more" [ref=e73]:
+              - generic [ref=e74]: computer
+              - generic [ref=e75]: Local
+              - generic [ref=e76]: expand_more

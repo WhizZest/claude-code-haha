@@ -62,6 +62,7 @@ export function isDurableCronEnabled(): boolean {
 }
 
 export const CRON_CREATE_TOOL_NAME = 'CronCreate'
+export const CRON_UPDATE_TOOL_NAME = 'CronUpdate'
 export const CRON_DELETE_TOOL_NAME = 'CronDelete'
 export const CRON_LIST_TOOL_NAME = 'CronList'
 
@@ -118,6 +119,13 @@ Jobs only fire while the REPL is idle (not mid-query). ${durableRuntimeNote}The 
 Recurring tasks auto-expire after ${DEFAULT_MAX_AGE_DAYS} days — they fire one final time, then are deleted. This bounds session lifetime. Tell the user about the ${DEFAULT_MAX_AGE_DAYS}-day limit when scheduling recurring jobs.
 
 Returns a job ID you can pass to ${CRON_DELETE_TOOL_NAME}.`
+}
+
+export const CRON_UPDATE_DESCRIPTION =
+  'Update a scheduled cron job by ID — change its cron expression, prompt, name, description, folder, model, permission mode, worktree, or recurring setting.'
+
+export function buildCronUpdatePrompt(durableEnabled: boolean): string {
+  return `Update an existing cron job previously scheduled with ${CRON_CREATE_TOOL_NAME}. Pass the job ID and any fields you want to change — only the provided fields are updated, the rest stay the same.${durableEnabled ? ' Works for both durable and session-only jobs.' : ''}`
 }
 
 export const CRON_DELETE_DESCRIPTION = 'Cancel a scheduled cron job by ID'
