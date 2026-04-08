@@ -1,5 +1,5 @@
 import { useUIStore } from '../../stores/uiStore'
-import { useSessionStore } from '../../stores/sessionStore'
+import { useTabStore } from '../../stores/tabStore'
 import { useTeamStore } from '../../stores/teamStore'
 import { EmptySession } from '../../pages/EmptySession'
 import { ActiveSession } from '../../pages/ActiveSession'
@@ -9,7 +9,7 @@ import { AgentTranscript } from '../../pages/AgentTranscript'
 
 export function ContentRouter() {
   const activeView = useUIStore((s) => s.activeView)
-  const activeSessionId = useSessionStore((s) => s.activeSessionId)
+  const activeTabId = useTabStore((s) => s.activeTabId)
   const viewingAgentId = useTeamStore((s) => s.viewingAgentId)
 
   if (activeView === 'settings') {
@@ -33,7 +33,7 @@ export function ContentRouter() {
   }
 
   // Code view
-  if (!activeSessionId) {
+  if (!activeTabId) {
     return <EmptySession />
   }
 

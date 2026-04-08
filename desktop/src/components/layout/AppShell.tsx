@@ -5,6 +5,9 @@ import { ToastContainer } from '../shared/Toast'
 import { useSettingsStore } from '../../stores/settingsStore'
 import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts'
 import { initializeDesktopServerUrl } from '../../lib/desktopRuntime'
+import { TabBar } from './TabBar'
+import { useTabStore } from '../../stores/tabStore'
+import { useChatStore } from '../../stores/chatStore'
 
 const isTauri = typeof window !== 'undefined' && ('__TAURI_INTERNALS__' in window || '__TAURI__' in window)
 
@@ -21,6 +24,12 @@ export function AppShell() {
       try {
         await initializeDesktopServerUrl()
         await fetchSettings()
+        // Restore tabs from localStorage
+        await useTabStore.getState().restoreTabs()
+        const activeId = useTabStore.getState().activeTabId
+        if (activeId) {
+          useChatStore.getState().connectToSession(activeId)
+        }
         if (!cancelled) {
           setReady(true)
         }
@@ -92,6 +101,7 @@ export function AppShell() {
       )}
       <Sidebar />
       <main id="content-area" className={`flex-1 flex flex-col overflow-hidden relative ${isTauri ? 'pt-[38px]' : ''}`}>
+        <TabBar />
         <ContentRouter />
       </main>
       <ToastContainer />
