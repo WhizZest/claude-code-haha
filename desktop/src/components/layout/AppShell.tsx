@@ -27,18 +27,6 @@ export function AppShell() {
         await initializeDesktopServerUrl()
         await fetchSettings()
 
-        // Check auth status: if no auth at all, redirect to provider setup
-        try {
-          const authStatus = await providersApi.authStatus()
-          if (!authStatus.hasAuth) {
-            // No auth — open Settings on the providers tab
-            useUIStore.getState().setPendingSettingsTab('providers')
-            useTabStore.getState().openTab(SETTINGS_TAB_ID, 'Settings', 'settings')
-          }
-        } catch {
-          // auth-status check failed — continue normally
-        }
-
         // Restore tabs from localStorage
         await useTabStore.getState().restoreTabs()
         const activeId = useTabStore.getState().activeTabId
