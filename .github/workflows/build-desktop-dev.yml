@@ -33,7 +33,7 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          ALL='[{"platform":"macos-latest","rust_target":"aarch64-apple-darwin","tauri_args":"--target aarch64-apple-darwin","bundles":"app,dmg","label":"macOS-ARM64","artifact_name":"desktop-macos-arm64"},{"platform":"macos-latest","rust_target":"x86_64-apple-darwin","tauri_args":"--target x86_64-apple-darwin","bundles":"app,dmg","label":"macOS-x64","artifact_name":"desktop-macos-x64"},{"platform":"windows-latest","rust_target":"x86_64-pc-windows-msvc","tauri_args":"","bundles":"nsis,msi","label":"Windows-x64","artifact_name":"desktop-windows-x64"},{"platform":"ubuntu-22.04","rust_target":"x86_64-unknown-linux-gnu","tauri_args":"","bundles":"deb,appimage","label":"Linux-x64","artifact_name":"desktop-linux-x64"},{"platform":"ubuntu-22.04-arm","rust_target":"aarch64-unknown-linux-gnu","tauri_args":"","bundles":"deb,appimage","label":"Linux-ARM64","artifact_name":"desktop-linux-arm64"}]'
+          ALL='[{"platform":"macos-latest","rust_target":"aarch64-apple-darwin","tauri_args":"--target aarch64-apple-darwin","bundles":"app,dmg","label":"macOS-ARM64","artifact_name":"macos-arm64"},{"platform":"macos-latest","rust_target":"x86_64-apple-darwin","tauri_args":"--target x86_64-apple-darwin","bundles":"app,dmg","label":"macOS-x64","artifact_name":"macos-x64"},{"platform":"windows-latest","rust_target":"x86_64-pc-windows-msvc","tauri_args":"","bundles":"nsis,msi","label":"Windows-x64","artifact_name":"windows-x64"},{"platform":"ubuntu-22.04","rust_target":"x86_64-unknown-linux-gnu","tauri_args":"","bundles":"deb,appimage","label":"Linux-x64","artifact_name":"linux-x64"},{"platform":"ubuntu-22.04-arm","rust_target":"aarch64-unknown-linux-gnu","tauri_args":"","bundles":"deb,appimage","label":"Linux-ARM64","artifact_name":"linux-arm64"}]'
 
           SELECTED="${{ inputs.platforms }}"
           if [ "$SELECTED" = "all" ]; then
@@ -62,6 +62,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      # ── 读取版本号 ───────────────────────────────────────────
+      - name: Read version
+        id: version
+        shell: bash
+        run: |
+          VERSION=$(jq -r '.version' desktop/src-tauri/tauri.conf.json)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       # ── 系统依赖 (Linux) ─────────────────────────────────────
       - name: Install Linux dependencies
@@ -151,7 +159,7 @@ jobs:
             SEARCH_DIR="$FALLBACK_DIR"
           fi
 
-          STAGING="desktop/build-artifacts/ci-${{ matrix.artifact_name }}"
+          STAGING="desktop/build-artifacts/ci-Claude-Code-Haha-v${{ steps.version.outputs.version }}-${{ matrix.artifact_name }}"
           mkdir -p "$STAGING"
 
           echo "Searching for artifacts in: $SEARCH_DIR"
@@ -175,7 +183,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.artifact_name }}
+          name: Claude-Code-Haha-v${{ steps.version.outputs.version }}-${{ matrix.artifact_name }}
           path: ${{ steps.collect.outputs.staging_dir }}
           retention-days: 7
           if-no-files-found: warn
