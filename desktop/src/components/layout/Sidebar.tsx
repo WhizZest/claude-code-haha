@@ -125,7 +125,7 @@ export function Sidebar() {
       <div className={`px-3 pb-2 ${isTauri && !isWindows ? 'pt-[44px]' : 'pt-3'}`}>
         <div className={`flex ${sidebarOpen ? 'items-center justify-between gap-3' : 'flex-col items-center gap-2'}`}>
           <div className={`flex min-w-0 items-center ${sidebarOpen ? 'gap-2.5' : 'justify-center'}`}>
-            <img src="/app-icon.jpg" alt="" className="h-8 w-8 rounded-lg flex-shrink-0" />
+            <img src="/app-icon.png" alt="" className="h-8 w-8 rounded-lg flex-shrink-0" />
             <span
               className={`sidebar-copy ${sidebarOpen ? 'sidebar-copy--visible' : 'sidebar-copy--hidden'} text-[13px] font-semibold tracking-tight text-[var(--color-text-primary)]`}
               style={{ fontFamily: 'var(--font-headline)' }}
