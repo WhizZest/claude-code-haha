@@ -73,6 +73,58 @@ function buildH5LaunchUrl(baseUrl: string | null, token: string | null): string 
   }
 }
 
+function isLanH5BaseUrl(url: URL): boolean {
+  return url.protocol === 'http:' &&
+    !!url.port &&
+    (
+      url.hostname === 'localhost' ||
+      url.hostname === '127.0.0.1' ||
+      url.hostname.startsWith('10.') ||
+      url.hostname.startsWith('192.168.') ||
+      /^172\.(1[6-9]|2\d|3[0-1])\./.test(url.hostname) ||
+      url.hostname.startsWith('169.254.')
+    )
+}
+
+function extractH5AccessAddressDraft(baseUrl: string | null): string {
+  if (!baseUrl) return ''
+
+  try {
+    const url = new URL(baseUrl)
+    return isLanH5BaseUrl(url) ? url.hostname : baseUrl
+  } catch {
+    return baseUrl
+  }
+}
+
+function extractH5AccessPort(baseUrl: string | null): string | null {
+  if (!baseUrl) return null
+
+  try {
+    const url = new URL(baseUrl)
+    return url.port || null
+  } catch {
+    return null
+  }
+}
+
+function buildH5PublicBaseUrlFromHostDraft(draft: string, currentBaseUrl: string | null): string | null {
+  const trimmed = draft.trim()
+  if (!trimmed) return null
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(trimmed)) return trimmed
+
+  try {
+    const current = currentBaseUrl ? new URL(currentBaseUrl) : null
+    if (!current) return trimmed
+
+    const port = current.port ? `:${current.port}` : ''
+    const path = current.pathname === '/' ? '' : current.pathname.replace(/\/+$/, '')
+    return `${current.protocol}//${trimmed}${port}${path}`
+  } catch {
+    return trimmed
+  }
+}
+
 export function Settings() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('providers')
   const pendingSettingsTab = useUIStore((s) => s.pendingSettingsTab)
@@ -2465,7 +2517,7 @@ function H5AccessSettings() {
   } = useSettingsStore()
   const t = useTranslation()
   const addToast = useUIStore((s) => s.addToast)
-  const [h5PublicBaseUrlDraft, setH5PublicBaseUrlDraft] = useState(h5Access.publicBaseUrl ?? '')
+  const [h5PublicBaseUrlDraft, setH5PublicBaseUrlDraft] = useState(extractH5AccessAddressDraft(h5Access.publicBaseUrl))
   const [h5GeneratedToken, setH5GeneratedToken] = useState<string | null>(null)
   const [h5TokenVisible, setH5TokenVisible] = useState(false)
   const [h5EnableConfirmOpen, setH5EnableConfirmOpen] = useState(false)
@@ -2476,10 +2528,12 @@ function H5AccessSettings() {
     () => buildH5LaunchUrl(h5AccessUrl, h5GeneratedToken),
     [h5AccessUrl, h5GeneratedToken],
   )
-  const h5AccessDirty = h5PublicBaseUrlDraft.trim() !== (h5Access.publicBaseUrl ?? '')
+  const h5AccessPort = extractH5AccessPort(h5AccessUrl)
+  const h5NextPublicBaseUrl = buildH5PublicBaseUrlFromHostDraft(h5PublicBaseUrlDraft, h5Access.publicBaseUrl)
+  const h5AccessDirty = h5NextPublicBaseUrl !== (h5Access.publicBaseUrl ?? null)
 
   useEffect(() => {
-    setH5PublicBaseUrlDraft(h5Access.publicBaseUrl ?? '')
+    setH5PublicBaseUrlDraft(extractH5AccessAddressDraft(h5Access.publicBaseUrl))
   }, [h5Access])
 
   useEffect(() => {
@@ -2518,7 +2572,7 @@ function H5AccessSettings() {
   const handleH5SettingsSave = async () => {
     await runH5Action(async () => {
       await updateH5AccessSettings({
-        publicBaseUrl: h5PublicBaseUrlDraft.trim() || null,
+        publicBaseUrl: h5NextPublicBaseUrl,
       })
     })
   }
@@ -2624,13 +2678,22 @@ function H5AccessSettings() {
           </div>
 
           <div className="mt-4 grid grid-cols-1 gap-3">
-            <Input
-              id="h5-access-public-url"
-              label={t('settings.general.h5AccessPublicUrl')}
-              value={h5PublicBaseUrlDraft}
-              placeholder={t('settings.general.h5AccessPublicUrlPlaceholder')}
-              onChange={(event) => setH5PublicBaseUrlDraft(event.target.value)}
-            />
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_9rem]">
+              <Input
+                id="h5-access-public-url"
+                label={t('settings.general.h5AccessPublicHost')}
+                value={h5PublicBaseUrlDraft}
+                placeholder={t('settings.general.h5AccessPublicHostPlaceholder')}
+                onChange={(event) => setH5PublicBaseUrlDraft(event.target.value)}
+              />
+              <Input
+                id="h5-access-current-port"
+                label={t('settings.general.h5AccessCurrentPort')}
+                value={h5AccessPort ?? t('settings.general.h5AccessCurrentPortUnknown')}
+                readOnly
+                className="text-[var(--color-text-tertiary)]"
+              />
+            </div>
             <div className="flex items-center justify-between gap-3">
               <p className="text-xs text-[var(--color-text-tertiary)]">
                 {t('settings.general.h5AccessOpenHint')}

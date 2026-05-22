@@ -857,6 +857,7 @@ describe('Settings > General tab', () => {
     fireEvent.click(screen.getByText('H5 Access'))
     const section = screen.getByRole('region', { name: 'H5 Access' })
 
+    expect(within(section).getByLabelText('Access host / IP')).toHaveValue('https://phone.example/app')
     await act(async () => {
       fireEvent.click(within(section).getByRole('button', { name: 'Copy H5 URL' }))
     })
@@ -878,7 +879,35 @@ describe('Settings > General tab', () => {
     expect(within(section).getByText('H5 unavailable')).toBeInTheDocument()
   })
 
-  it('updates H5 public URL from General settings', async () => {
+  it('updates H5 host by reusing the current service port', async () => {
+    useSettingsStore.setState({
+      h5Access: {
+        enabled: true,
+        tokenPreview: 'h5a1b2c3',
+        allowedOrigins: [],
+        publicBaseUrl: 'http://172.20.16.1:54064',
+      },
+    })
+    render(<Settings />)
+
+    fireEvent.click(screen.getByText('H5 Access'))
+
+    const section = screen.getByRole('region', { name: 'H5 Access' })
+    expect(within(section).getByLabelText('Current port')).toHaveValue('54064')
+    fireEvent.change(within(section).getByLabelText('Access host / IP'), {
+      target: { value: '192.168.1.100' },
+    })
+
+    await act(async () => {
+      fireEvent.click(within(section).getByRole('button', { name: 'Save H5 settings' }))
+    })
+
+    expect(useSettingsStore.getState().updateH5AccessSettings).toHaveBeenCalledWith({
+      publicBaseUrl: 'http://192.168.1.100:54064',
+    })
+  })
+
+  it('still accepts a full H5 public URL for reverse proxy setups', async () => {
     useSettingsStore.setState({
       h5Access: {
         enabled: false,
@@ -892,7 +921,7 @@ describe('Settings > General tab', () => {
     fireEvent.click(screen.getByText('H5 Access'))
 
     const section = screen.getByRole('region', { name: 'H5 Access' })
-    fireEvent.change(within(section).getByLabelText('Public URL'), {
+    fireEvent.change(within(section).getByLabelText('Access host / IP'), {
       target: { value: 'https://phone.example/app' },
     })
 

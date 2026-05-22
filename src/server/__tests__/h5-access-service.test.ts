@@ -3,6 +3,7 @@ import * as fs from 'node:fs/promises'
 import * as os from 'node:os'
 import * as path from 'node:path'
 import {
+  findPrivateLanAddress,
   H5AccessService,
   resolveEffectiveH5PublicBaseUrl,
 } from '../services/h5AccessService.js'
@@ -100,10 +101,10 @@ describe('H5AccessService', () => {
     expect(result.settings.publicBaseUrl).toBe('https://chat.example.com/app')
   })
 
-  test('auto LAN mode replaces stale local public URLs but keeps public reverse proxies', () => {
+  test('auto LAN mode fills blank or loopback URLs but preserves manual LAN URLs', () => {
     expect(resolveEffectiveH5PublicBaseUrl({
       enabled: true,
-      storedPublicBaseUrl: 'http://192.168.0.102:5179',
+      storedPublicBaseUrl: null,
       configuredPublicBaseUrl: null,
       autoPublicBaseUrl: 'http://192.168.0.102:39876',
     })).toBe('http://192.168.0.102:39876')
@@ -117,10 +118,46 @@ describe('H5AccessService', () => {
 
     expect(resolveEffectiveH5PublicBaseUrl({
       enabled: true,
+      storedPublicBaseUrl: 'http://192.168.1.100:54064',
+      configuredPublicBaseUrl: null,
+      autoPublicBaseUrl: 'http://172.20.16.1:39876',
+    })).toBe('http://192.168.1.100:54064')
+
+    expect(resolveEffectiveH5PublicBaseUrl({
+      enabled: true,
       storedPublicBaseUrl: 'https://chat.example.com/app',
       configuredPublicBaseUrl: null,
       autoPublicBaseUrl: 'http://192.168.0.102:39876',
     })).toBe('https://chat.example.com/app')
+  })
+
+  test('auto LAN detection prefers physical adapters over WSL and Docker virtual adapters', () => {
+    expect(findPrivateLanAddress({
+      'vEthernet (WSL)': [{
+        address: '172.20.16.1',
+        netmask: '255.255.240.0',
+        family: 'IPv4',
+        mac: '00:15:5d:00:00:01',
+        internal: false,
+        cidr: '172.20.16.1/20',
+      }],
+      'Docker Desktop': [{
+        address: '172.17.0.1',
+        netmask: '255.255.0.0',
+        family: 'IPv4',
+        mac: '02:42:ac:11:00:01',
+        internal: false,
+        cidr: '172.17.0.1/16',
+      }],
+      'Wi-Fi': [{
+        address: '192.168.1.100',
+        netmask: '255.255.255.0',
+        family: 'IPv4',
+        mac: 'aa:bb:cc:dd:ee:ff',
+        internal: false,
+        cidr: '192.168.1.100/24',
+      }],
+    })).toBe('192.168.1.100')
   })
 
   test('regenerateToken invalidates the previous token', async () => {
