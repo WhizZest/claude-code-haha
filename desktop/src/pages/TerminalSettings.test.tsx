@@ -2,6 +2,7 @@ import { act, fireEvent, render, screen, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { useSettingsStore } from '../stores/settingsStore'
+import { destroyTerminalRuntime } from '../lib/terminalRuntime'
 
 const terminalMocks = vi.hoisted(() => {
   const terminalInstance = {
@@ -158,6 +159,25 @@ describe('TerminalSettings', () => {
 
     expect(terminalMocks.terminalInstance.write).toHaveBeenCalledWith('hello\r\n')
     expect(terminalMocks.terminalInstance.write).not.toHaveBeenCalledWith('ignored\r\n')
+  })
+
+  it('can preserve and reattach a running terminal runtime across unmounts', async () => {
+    terminalMocks.available = true
+
+    const first = render(<TerminalSettings runtimeId="shared-runtime" preserveOnUnmount />)
+    await waitFor(() => expect(terminalMocks.spawn).toHaveBeenCalledTimes(1))
+
+    first.unmount()
+    expect(terminalMocks.kill).not.toHaveBeenCalled()
+
+    render(<TerminalSettings runtimeId="shared-runtime" />)
+
+    await waitFor(() => {
+      expect(terminalMocks.terminalInstance.open).toHaveBeenCalledTimes(2)
+    })
+    expect(terminalMocks.spawn).toHaveBeenCalledTimes(1)
+
+    destroyTerminalRuntime('shared-runtime')
   })
 
   it('shows Windows-only startup shell controls in settings mode', () => {

@@ -286,6 +286,11 @@ export function ActiveSession() {
       ? state.isPanelOpen(activeTabId)
       : false,
   )
+  const terminalPanelRuntimeId = useTerminalPanelStore((state) =>
+    activeTabId && isSessionTabState(activeTabId, activeTabType) && !isMemberSession && !isMobileLayout
+      ? state.panelBySession[activeTabId]?.runtimeId
+      : undefined,
+  )
   const terminalPanelHeight = useTerminalPanelStore((state) => state.height)
 
   useEffect(() => {
@@ -501,21 +506,27 @@ export function ActiveSession() {
             compact={showWorkspacePanel}
           />
 
-          {showTerminalPanel && activeTabId ? (
+          {terminalPanelRuntimeId && activeTabId ? (
             <div
               data-testid="session-terminal-panel"
-              className="flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-surface-container-lowest)]"
-              style={{ height: terminalPanelHeight }}
+              className={[
+                'flex shrink-0 flex-col border-t border-[var(--color-border)] bg-[var(--color-surface-container-lowest)]',
+                showTerminalPanel ? '' : 'hidden',
+              ].join(' ')}
+              style={{ height: showTerminalPanel ? terminalPanelHeight : 0 }}
             >
-              <TerminalResizeHandle />
+              {showTerminalPanel && <TerminalResizeHandle />}
               <TerminalSettings
-                active
+                active={showTerminalPanel}
                 docked
                 cwd={getSessionTerminalCwd(session)}
+                runtimeId={terminalPanelRuntimeId}
+                preserveOnUnmount
                 testId={`session-terminal-host-${activeTabId}`}
                 onOpenInTab={() => {
                   useTerminalPanelStore.getState().closePanel(activeTabId)
-                  useTabStore.getState().openTerminalTab(getSessionTerminalCwd(session))
+                  useTabStore.getState().openTerminalTab(getSessionTerminalCwd(session), terminalPanelRuntimeId)
+                  useTerminalPanelStore.getState().detachRuntime(activeTabId)
                 }}
                 onClose={() => useTerminalPanelStore.getState().closePanel(activeTabId)}
               />

@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import type { Terminal as XTermTerminal } from '@xterm/xterm'
-import type { FitAddon as XTermFitAddon } from '@xterm/addon-fit'
 import { useTranslation, type TranslationKey } from '../i18n'
 import { terminalApi } from '../api/terminal'
 import { useSettingsStore } from '../stores/settingsStore'
@@ -8,8 +6,16 @@ import { Dropdown } from '../components/shared/Dropdown'
 import { Input } from '../components/shared/Input'
 import { Button } from '../components/shared/Button'
 import type { DesktopTerminalStartupShell } from '../types/settings'
-
-type TerminalStatus = 'idle' | 'starting' | 'running' | 'exited' | 'error' | 'unavailable'
+import {
+  attachTerminalRuntime,
+  createLocalTerminalRuntimeId,
+  destroyTerminalRuntime,
+  getTerminalRuntime,
+  subscribeTerminalRuntime,
+  updateTerminalRuntime,
+  type TerminalRuntime,
+  type TerminalStatus,
+} from '../lib/terminalRuntime'
 
 const STATUS_LABEL_KEYS: Record<TerminalStatus, TranslationKey> = {
   idle: 'settings.terminal.status.idle',
@@ -30,6 +36,8 @@ type TerminalSettingsProps = {
   workspace?: boolean
   docked?: boolean
   showPreferences?: boolean
+  runtimeId?: string
+  preserveOnUnmount?: boolean
 }
 
 export function TerminalSettings({
@@ -42,24 +50,37 @@ export function TerminalSettings({
   workspace = false,
   docked = false,
   showPreferences = false,
+  runtimeId,
+  preserveOnUnmount = false,
 }: TerminalSettingsProps = {}) {
   const t = useTranslation()
   const desktopTerminal = useSettingsStore((state) => state.desktopTerminal)
   const setDesktopTerminal = useSettingsStore((state) => state.setDesktopTerminal)
   const hostRef = useRef<HTMLDivElement | null>(null)
-  const terminalRef = useRef<XTermTerminal | null>(null)
-  const fitRef = useRef<XTermFitAddon | null>(null)
-  const sessionIdRef = useRef<number | null>(null)
-  const unlistenRef = useRef<Array<() => void>>([])
-  const [status, setStatus] = useState<TerminalStatus>(() => terminalApi.isAvailable() ? 'idle' : 'unavailable')
-  const [error, setError] = useState<string | null>(null)
-  const [shellInfo, setShellInfo] = useState<{ shell: string; cwd: string } | null>(null)
+  const localRuntimeIdRef = useRef<string | null>(null)
+  if (!localRuntimeIdRef.current) {
+    localRuntimeIdRef.current = runtimeId ?? createLocalTerminalRuntimeId()
+  }
+  const effectiveRuntimeId = runtimeId ?? localRuntimeIdRef.current
+  const runtimeRef = useRef<TerminalRuntime | null>(null)
+  if (!runtimeRef.current || runtimeRef.current.id !== effectiveRuntimeId) {
+    runtimeRef.current = getTerminalRuntime(effectiveRuntimeId, terminalApi.isAvailable() ? 'idle' : 'unavailable')
+  }
+  const runtime = runtimeRef.current
+  const [, forceRuntimeUpdate] = useState(0)
+  const status = runtime.status
+  const error = runtime.error
+  const shellInfo = runtime.shellInfo
   const [startupShell, setStartupShell] = useState<DesktopTerminalStartupShell>(desktopTerminal?.startupShell ?? 'system')
   const [customShellPath, setCustomShellPath] = useState(desktopTerminal?.customShellPath ?? '')
   const [preferencesError, setPreferencesError] = useState<string | null>(null)
   const [preferencesSaved, setPreferencesSaved] = useState(false)
   const [preferencesSaving, setPreferencesSaving] = useState(false)
   const isWindows = typeof navigator !== 'undefined' && /Win/i.test(navigator.platform || navigator.userAgent)
+
+  useEffect(() => {
+    return subscribeTerminalRuntime(runtime, () => forceRuntimeUpdate((value) => value + 1))
+  }, [runtime])
 
   useEffect(() => {
     setStartupShell(desktopTerminal?.startupShell ?? 'system')
@@ -101,40 +122,41 @@ export function TerminalSettings({
   ], [t])
 
   const resizeSession = useCallback(() => {
-    const terminal = terminalRef.current
-    const fit = fitRef.current
-    const sessionId = sessionIdRef.current
+    const terminal = runtime.terminal
+    const fit = runtime.fit
+    const sessionId = runtime.nativeSessionId
     if (!terminal || !fit) return
 
     fit.fit()
     if (sessionId) {
       void terminalApi.resize(sessionId, terminal.cols, terminal.rows).catch(() => {})
     }
-  }, [])
+  }, [runtime])
 
   const startTerminal = useCallback(async () => {
     if (!terminalApi.isAvailable()) {
-      setStatus('unavailable')
+      updateTerminalRuntime(runtime, { status: 'unavailable' })
       return
     }
 
     const host = hostRef.current
     if (!host) return
 
-    setError(null)
-    setStatus('starting')
-    setShellInfo(null)
+    updateTerminalRuntime(runtime, { error: null, status: 'starting', shellInfo: null })
 
-    const existing = sessionIdRef.current
+    const existing = runtime.nativeSessionId
     if (existing) {
       await terminalApi.kill(existing).catch(() => {})
-      sessionIdRef.current = null
+      runtime.nativeSessionId = null
     }
-    unlistenRef.current.forEach((unlisten) => unlisten())
-    unlistenRef.current = []
+    runtime.dataDisposable?.dispose()
+    runtime.dataDisposable = null
+    runtime.unlisteners.forEach((unlisten) => unlisten())
+    runtime.unlisteners = []
 
-    terminalRef.current?.dispose()
-    fitRef.current = null
+    runtime.terminal?.dispose()
+    runtime.terminal = null
+    runtime.fit = null
     host.innerHTML = ''
 
     const [{ Terminal }, { FitAddon }] = await Promise.all([
@@ -175,30 +197,31 @@ export function TerminalSettings({
     const fit = new FitAddon()
     terminal.loadAddon(fit)
     terminal.open(host)
-    terminalRef.current = terminal
-    fitRef.current = fit
+    updateTerminalRuntime(runtime, { terminal, fit })
     fit.fit()
 
     const outputUnlisten = await terminalApi.onOutput((payload) => {
-      if (payload.session_id === sessionIdRef.current) {
+      if (payload.session_id === runtime.nativeSessionId) {
         terminal.write(payload.data)
       }
     })
     const exitUnlisten = await terminalApi.onExit((payload) => {
-      if (payload.session_id !== sessionIdRef.current) return
-      setStatus('exited')
+      if (payload.session_id !== runtime.nativeSessionId) return
+      updateTerminalRuntime(runtime, { status: 'exited' })
       const signal = payload.signal ? `, ${payload.signal}` : ''
       terminal.writeln(`\r\n[process exited: ${payload.code}${signal}]`)
-      sessionIdRef.current = null
+      updateTerminalRuntime(runtime, { nativeSessionId: null })
     })
-    unlistenRef.current = [outputUnlisten, exitUnlisten]
+    runtime.unlisteners = [outputUnlisten, exitUnlisten]
 
-    terminal.onData((data) => {
-      const sessionId = sessionIdRef.current
+    runtime.dataDisposable = terminal.onData((data) => {
+      const sessionId = runtime.nativeSessionId
       if (sessionId) {
         void terminalApi.write(sessionId, data).catch((err) => {
-          setError(err instanceof Error ? err.message : String(err))
-          setStatus('error')
+          updateTerminalRuntime(runtime, {
+            error: err instanceof Error ? err.message : String(err),
+            status: 'error',
+          })
         })
       }
     })
@@ -209,42 +232,46 @@ export function TerminalSettings({
         rows: terminal.rows,
         ...(cwd ? { cwd } : {}),
       })
-      sessionIdRef.current = result.session_id
-      setShellInfo({ shell: result.shell, cwd: result.cwd })
-      setStatus('running')
+      updateTerminalRuntime(runtime, {
+        nativeSessionId: result.session_id,
+        shellInfo: { shell: result.shell, cwd: result.cwd },
+        status: 'running',
+      })
       resizeSession()
     } catch (err) {
       outputUnlisten()
       exitUnlisten()
       terminal.dispose()
-      terminalRef.current = null
-      fitRef.current = null
-      setError(err instanceof Error ? err.message : String(err))
-      setStatus('error')
+      updateTerminalRuntime(runtime, {
+        terminal: null,
+        fit: null,
+        error: err instanceof Error ? err.message : String(err),
+        status: 'error',
+      })
     }
-  }, [cwd, resizeSession])
+  }, [cwd, resizeSession, runtime])
 
   useEffect(() => {
     if (!terminalApi.isAvailable()) return
-    void startTerminal()
+    if (runtime.terminal) {
+      if (hostRef.current) {
+        attachTerminalRuntime(runtime, hostRef.current)
+      }
+      resizeSession()
+    } else {
+      void startTerminal()
+    }
 
     const observer = new ResizeObserver(() => resizeSession())
     if (hostRef.current) observer.observe(hostRef.current)
 
     return () => {
       observer.disconnect()
-      const sessionId = sessionIdRef.current
-      if (sessionId) {
-        void terminalApi.kill(sessionId).catch(() => {})
+      if (!preserveOnUnmount) {
+        destroyTerminalRuntime(runtime.id)
       }
-      terminalRef.current?.dispose()
-      terminalRef.current = null
-      fitRef.current = null
-      unlistenRef.current.forEach((unlisten) => unlisten())
-      unlistenRef.current = []
-      sessionIdRef.current = null
     }
-  }, [resizeSession, startTerminal])
+  }, [preserveOnUnmount, resizeSession, runtime, startTerminal])
 
   useEffect(() => {
     if (active) {
@@ -253,7 +280,7 @@ export function TerminalSettings({
   }, [active, resizeSession])
 
   const clearTerminal = () => {
-    terminalRef.current?.clear()
+    runtime.terminal?.clear()
   }
 
   const savePreferences = async () => {
@@ -329,7 +356,7 @@ export function TerminalSettings({
           <button
             type="button"
             onClick={clearTerminal}
-            disabled={!terminalRef.current}
+            disabled={!runtime.terminal}
             className="inline-flex h-8 items-center gap-1.5 rounded-[var(--radius-md)] border border-[var(--color-border)] px-2.5 text-xs font-medium text-[var(--color-text-secondary)] transition-colors hover:bg-[var(--color-surface-hover)] hover:text-[var(--color-text-primary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-border-focus)] disabled:cursor-not-allowed disabled:opacity-50"
           >
             <span className="material-symbols-outlined text-[16px]">mop</span>
